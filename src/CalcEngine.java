@@ -59,13 +59,15 @@ public class CalcEngine {
 				jd.plus(-1 * Integer.parseInt(displayValue));
 				date = jd.calculateGreg();
 				displayValue = date.toString();
-
-				// if input is a value in date format, subtract both dates, output number of
-				// days between dates
-				// Source:
-				// https://stackoverflow.com/questions/15491894/regex-to-validate-date-format-dd-mm-yyyy
-
-			} else if (displayValue.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+			} 
+			break;
+			
+			// if input is a value in date format, subtract both dates, output number of
+			// days between dates
+			// Source:
+			// https://stackoverflow.com/questions/15491894/regex-to-validate-date-format-dd-mm-yyyy
+		case '#': 
+			if (displayValue.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]\\d\\d\\d\\d$")) {
 				setDate();
 				JulianDate jd2 = date.calculateJD();
 				displayValue = jd.minus(jd2) + "";
@@ -75,20 +77,23 @@ public class CalcEngine {
 				displayValue = "Please try again.";
 				throw new IllegalArgumentException("Please try again.");
 			}	
-			break;
+			//break;
 		}
 	}
-	
+
 	/**
 	 * Gregorian date into input date split date after dot in values for year, month
 	 * and day
 	 */
 	public void setDate() {
-		String[] dmy = displayValue.split("\\.");
+		if (displayValue.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]\\d\\d\\d\\d$")) {
+			String[] dmy = displayValue.split("\\.");
 
-		date.setYear(Integer.parseInt(dmy[2]));
-		date.setMonth(Integer.parseInt(dmy[1]));
-		date.setDay(Integer.parseInt(dmy[0]));
+			date.setYear(Integer.parseInt(dmy[2]));
+			date.setMonth(Integer.parseInt(dmy[1]));
+			date.setDay(Integer.parseInt(dmy[0]));
+			
+		} else throw new IllegalArgumentException("Please try again.");
 	}
 
 	/**
@@ -128,9 +133,13 @@ public class CalcEngine {
 	 * @param operator The operator to apply.
 	 */
 	public void applyOperator(char operator) {
-		lastOperator = operator;
-		setDate();
-		displayValue = "";
+		try {
+			lastOperator = operator;
+			setDate();
+			displayValue = "";
+		} catch (IllegalArgumentException e) {
+			displayValue = e.getMessage();
+		}
 	}
 
 	/**
@@ -161,5 +170,4 @@ public class CalcEngine {
 	public String getVersion() {
 		return "Version 3.0, extended by Anni & Katya";
 	}
-
 }

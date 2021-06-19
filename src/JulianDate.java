@@ -1,7 +1,4 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Scanner;
 
 public class JulianDate {
 
@@ -41,7 +38,6 @@ public class JulianDate {
 	public GregorianDate calculateGreg() {
 
 		int jalpha,jb,jc,JD,je,year,month,day;
-		double julian = julianDate + HALFSECOND / 86400.0;
 		int ja = (int) julianDate;
 		if (ja>= JGREG) {
 			jalpha = (int) (((ja - 1867216) - 0.25) / 36524.25);

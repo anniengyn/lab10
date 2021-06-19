@@ -83,8 +83,9 @@ public class UserInterface implements ActionListener {
 		addButton(buttonPanel, ".");
 		addButton(buttonPanel, "WEEKDAY");
 
-		buttonPanel.add(new JLabel());
+		//buttonPanel.add(new JLabel());
 		addButton(buttonPanel, "=");
+		addButton(buttonPanel, "DAYS BETWEEN");
 
 		buttonPanel.add(weekday = new JLabel("Date:  ", SwingConstants.RIGHT));
 		buttonPanel.add(currentDate = new JLabel("dd.mm.yy"));
@@ -146,8 +147,13 @@ public class UserInterface implements ActionListener {
 			} catch (IllegalArgumentException e) {
 				//display.setText(e.getMessage());
 			}
-			
 			break;
+			// Since applyOperator only accepts char parameters, 
+			// we take the # symbol to then process this case in calcEngine	
+		case "DAYS BETWEEN":
+			calc.applyOperator('#'); 
+			break;
+			
 		default:
 			calc.buttonPressed(command);
 		}
