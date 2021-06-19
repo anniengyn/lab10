@@ -71,8 +71,10 @@ public class CalcEngine {
 				displayValue = jd.minus(jd2) + "";
 			}
 			// If input is not correct
-			else
+			else {
+				displayValue = "Please try again.";
 				throw new IllegalArgumentException("Please try again.");
+			}	
 			break;
 		}
 	}

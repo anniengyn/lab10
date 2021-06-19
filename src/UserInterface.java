@@ -140,8 +140,13 @@ public class UserInterface implements ActionListener {
 			showInfo();
 			break;
 		case "=":
-			calc.output();
-			display2.setText(calc.getDate().calculateJD().toString());
+			try {
+				calc.output();
+				display2.setText(calc.getDate().calculateJD().toString());
+			} catch (IllegalArgumentException e) {
+				//display.setText(e.getMessage());
+			}
+			
 			break;
 		default:
 			calc.buttonPressed(command);
