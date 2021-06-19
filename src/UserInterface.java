@@ -3,7 +3,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 
 /**
  * A graphical user interface for the calculator. No calculation is being done
@@ -20,6 +19,7 @@ public class UserInterface implements ActionListener {
 
 	protected JFrame frame;
 	protected JTextField display;
+	protected JTextField display2;
 	private JLabel status;
 
 	private JLabel currentDate;
@@ -27,7 +27,6 @@ public class UserInterface implements ActionListener {
 
 	/**
 	 * Create a user interface.
-	 * 
 	 * @param engine The calculator engine.
 	 */
 	public UserInterface(CalcEngine engine) {
@@ -39,7 +38,6 @@ public class UserInterface implements ActionListener {
 
 	/**
 	 * Set the visibility of the interface.
-	 * 
 	 * @param visible true if the interface is to be made visible, false otherwise.
 	 */
 	public void setVisible(boolean visible) {
@@ -53,14 +51,16 @@ public class UserInterface implements ActionListener {
 		frame = new JFrame(calc.getTitle());
 
 		JPanel contentPane = (JPanel) frame.getContentPane();
-		contentPane.setLayout(new BorderLayout(8, 8));
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		display = new JTextField();
 		// Message shown in the beginning
 		display.setText(" Insert date in format dd.mm.yyyy");
+		
+		display2 = new JTextField();
 
-		contentPane.add(display, BorderLayout.NORTH);
+		contentPane.add(display);
 
 		JPanel buttonPanel = new JPanel(new GridLayout(5, 4));
 		addButton(buttonPanel, "7");
@@ -88,11 +88,14 @@ public class UserInterface implements ActionListener {
 
 		buttonPanel.add(weekday = new JLabel("Date:  ", SwingConstants.RIGHT));
 		buttonPanel.add(currentDate = new JLabel("dd.mm.yy"));
+		
 
-		contentPane.add(buttonPanel, BorderLayout.CENTER);
+		contentPane.add(buttonPanel);
+		contentPane.add(display2);
 
-		status = new JLabel(calc.getAuthor());
-		contentPane.add(status, BorderLayout.SOUTH);
+		status = new JLabel(calc.getAuthor(), SwingConstants.RIGHT);
+		status.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		contentPane.add(status);
 
 		frame.pack();
 	}
@@ -131,18 +134,18 @@ public class UserInterface implements ActionListener {
 		case "AC":
 			calc.clear();
 			weekday.setText("Date: ");
+			display2.setText("");
 			break;
 		case "?":
 			showInfo();
 			break;
 		case "=":
 			calc.output();
-			weekday.setText(calc.weekday() + ", ");
+			display2.setText(calc.getDate().calculateJD().toString());
 			break;
 		default:
 			calc.buttonPressed(command);
 		}
-
 		redisplay();
 	}
 
@@ -151,7 +154,7 @@ public class UserInterface implements ActionListener {
 	 */
 	protected void redisplay() {
 		display.setText(calc.getDisplayString());
-		currentDate.setText(calc.getDate());
+		currentDate.setText(calc.getDateString());
 	}
 
 	/**

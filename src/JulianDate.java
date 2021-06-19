@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class JulianDate {
 
-
 	int year;
 	int month;
 	int day;
@@ -26,39 +25,6 @@ public class JulianDate {
 		julianDate = jd;
 	}
 	
-	public static void main(String[] args) {
-
-		System.out.println("Please enter your birthday (dd.mm.yyyy):");
-		Scanner s = new Scanner(System.in);
-		String input = s.nextLine();
-
-		Calendar c = Calendar.getInstance();
-		Calendar t = Calendar.getInstance();
-
-		// https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/text/SimpleDateFormat.html
-		try {
-			c.setTime(new SimpleDateFormat("dd.MM.yyyy").parse(input));
-		} catch (ParseException e1) {
-			System.out.println("Error: Wrong format. Please try again.");
-		}
-
-		JulianDate jd = new JulianDate(c);
-
-		JulianDate today = new JulianDate(t);
-
-		if (t.get(Calendar.DAY_OF_MONTH) == c.get(Calendar.DAY_OF_MONTH)
-				&& t.get(Calendar.MONTH) + 1 == c.get(Calendar.MONTH) + 1) {
-			System.out.printf("\nHappy Birthday! It seems like you survived another year.");
-		}
-
-		System.out.printf("\nYour Julian date is : " + jd.calculateJD() + ".");
-
-		System.out.printf("\nYou were born on a beautiful %s.", jd.weekday());
-
-		System.out.printf("\nAnd guess what... you are %d days old. :)", (today.calculateJD() - jd.calculateJD()));
-
-	}
-	
 	/*
 	 * Calculate Julian date
 	 */ // Source: https://www.hermetic.ch/cal_stud/jdn.htm
@@ -68,8 +34,6 @@ public class JulianDate {
 				- (3 * ((year + 4900 + (year - 14) / 12) / 100)) / 4 + day - 32075 + 1;
 	}
 	
-
-
 	/**
 	 * Converts Julian date into Gregorian
 	 * // https://stackoverflow.com/questions/3017954/convert-a-julian-date-to-regular-calendar-date
@@ -97,7 +61,6 @@ public class JulianDate {
 
 		return new GregorianDate(year, month, day);
 	}
-
 	
 	/*
 	 * Get weekday, return "nice day" if it can not find weekday.
@@ -140,5 +103,4 @@ public class JulianDate {
 	public String toString() {
 		return julianDate + "";
 	}
-
 }

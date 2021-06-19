@@ -8,10 +8,12 @@ public class Calculator {
 	public Calculator() {
 		engine = new CalcEngine();
 		gui = new UserInterface(engine);
+		
 	}
 
 	public static void main(String[] args) {
 		Calculator c = new Calculator();
+		c.show();
 	}
 
 	/**

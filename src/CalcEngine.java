@@ -94,7 +94,16 @@ public class CalcEngine {
 	 * 
 	 * @return a String of Gregorian Date in format mm.dd.yyyy
 	 */
-	public String getDate() {
+	public GregorianDate getDate() {
+		return date;
+	}
+	
+	/**
+	 * Get Gregorian date
+	 * 
+	 * @return a String of Gregorian Date in format mm.dd.yyyy
+	 */
+	public String getDateString() {
 		if (date.year() == 0 && date.month() == 0 && date.day() == 0)
 			return "dd.mm.yyyy";
 		else
